@@ -2,9 +2,15 @@
 
 # Caddy
 
-[Website](https://caddyserver.com/) | [Documentation](https://caddyserver.com/docs)
+[Caddy Website](https://caddyserver.com/) | [Caddy Documentation](https://caddyserver.com/docs)
+
+Canonical source: https://git.sr.ht/~xyhhx/caddy-compose-crowdsec
+
+[Github Mirror](https://github.com/xyhhx/caddy-compose-crowdsec) | [Codeberg Mirror](https://codeberg.org/xyhhx/caddy-compose-crowdsec)
 
 </div>
+
+
 
 ## Prerequesites
 
@@ -95,4 +101,7 @@ make down up
 # Or...
 docker compose up -d --force-recreate
 ```
+## Further Reading
 
+- https://github.com/hslatman/caddy-crowdsec-bouncer
+- https://www.crowdsec.net/blog/secure-docker-compose-stacks-with-crowdsec
