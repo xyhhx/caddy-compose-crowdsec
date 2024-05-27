@@ -1,0 +1,50 @@
+services:
+  caddy:
+    build:
+      context: .
+      dockerfile: Containerfile
+    container_name: caddy
+    restart: always
+    security_opt:
+      - no-new-privileges=true
+    cap_add:
+      - NET_ADMIN
+    environment:
+      CROWDSEC_API_KEY: "${CROWDSEC_API_KEY}"
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    networks:
+      - webproxy
+      - crowdsec
+    volumes:
+      - ./config/caddy:/etc/caddy
+      - ./data/caddy:/data
+      - logs:/var/log/caddy
+    command: run --config /etc/caddy/Caddyfile
+
+  crowdsec:
+    image: crowdsecurity/crowdsec
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges=true
+    environment:
+      GID: "${GID:-1000}"
+      COLLECTIONS: crowdsecurity/caddy crowdsecurity/http-cve crowdsecurity/whitelist-good-actors
+      BOUNCER_KEY_CADDY: "${CROWDSEC_API_KEY}"
+    networks:
+      - crowdsec
+    volumes:
+      - crowdsec-db:/var/lib/crowdsec/db
+      - ./config/crowdsec/acquis.yaml:/etc/crowdsec/acquis.yaml
+      - logs:/var/log/caddy:ro
+
+networks:
+  crowdsec:
+  webproxy:
+    name: webproxy
+
+volumes:
+  logs:
+  crowdsec-db:
