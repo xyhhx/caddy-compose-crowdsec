@@ -10,7 +10,9 @@ Canonical source: https://git.sr.ht/~xyhhx/caddy-compose-crowdsec
 
 </div>
 
+It's pretty well known that security through obscurity is useless and that bots/script kiddies parse new TLS certificates to scour for juicy links; but you might not be aware of [just how actively they do that](https://honeypot.net/2024/05/16/i-am-not.html).
 
+To mitigate this, it might be a good idea to use Crowdsec to block known bad IPs. A custom module for Caddy exists, so we can use this to do it pretty trivially from Caddy itself.
 
 ## Prerequesites
 
